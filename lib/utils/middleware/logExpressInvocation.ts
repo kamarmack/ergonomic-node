@@ -52,12 +52,7 @@ const getExpressInvocationLog = ({
 };
 
 export const logExpressInvocation =
-	(
-		config: Record<
-			Extract<keyof GeneralizedSecretData, 'SECRET_CRED_SERVER_PROTOCOL'>,
-			string
-		>,
-	) =>
+	(config: Pick<GeneralizedSecretData, 'SECRET_CRED_SERVER_PROTOCOL'>) =>
 	(
 		req: express.Request,
 		res: express.Response<unknown, GeneralizedResponse>,
