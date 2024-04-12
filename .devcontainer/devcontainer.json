@@ -1,0 +1,16 @@
+{
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"context": ".."
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.shell.linux": "/bin/bash"
+			}
+		}
+	},
+	"forwardPorts": [],
+	"name": "Ergonomic Node Dev Container",
+	"postStartCommand": "npm install"
+}
