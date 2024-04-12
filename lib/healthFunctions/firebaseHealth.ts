@@ -9,12 +9,9 @@ export const firebaseHealthFunction =
 		req: express.Request,
 		res: express.Response<unknown, GeneralizedResponse>,
 		next: express.NextFunction,
-		config: Record<
-			Extract<
-				keyof GeneralizedSecretData,
-				'SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PROJECT_ID'
-			>,
-			string
+		config: Pick<
+			GeneralizedSecretData,
+			'SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PROJECT_ID'
 		> & {
 			db: Firestore;
 		},

@@ -9,6 +9,7 @@ import {
 	SendEmailNotificationParams,
 	SendEmailNotificationResponse,
 	GeneralizedSecretData,
+	GeneralizedServerVariables,
 	getAuthHeaderBearerToken,
 } from 'ergonomic-node/lib/utils/index.js';
 
@@ -17,19 +18,19 @@ export const notificationsHealthFunction =
 		req: express.Request<unknown, unknown, SendEmailNotificationParams>,
 		res: express.Response<unknown, SendEmailNotificationResponse>,
 		next: express.NextFunction,
-		config: Record<
-			Extract<
-				keyof GeneralizedSecretData,
-				'SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PRIVATE_KEY_ID'
-			>,
-			string
-		> & {
-			SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_EMAIL: string;
-			SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_NAME: string;
-			SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID: string;
-			db: Firestore;
-			googleAuthJwtInstanceForGmailApi: JWT | null;
-		},
+		config: Pick<
+			GeneralizedSecretData,
+			'SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PRIVATE_KEY_ID'
+		> &
+			Pick<
+				GeneralizedServerVariables,
+				| 'SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_EMAIL'
+				| 'SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_NAME'
+				| 'SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID'
+			> & {
+				db: Firestore;
+				googleAuthJwtInstanceForGmailApi: JWT | null;
+			},
 	) =>
 	() => {
 		return void (async () => {

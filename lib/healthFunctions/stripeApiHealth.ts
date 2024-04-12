@@ -13,12 +13,9 @@ export const stripeApiHealthFunction =
 		req: express.Request<unknown, unknown, stripe.Stripe.CustomerCreateParams>,
 		res: express.Response<unknown, GeneralizedResponse>,
 		next: express.NextFunction,
-		config: Record<
-			Extract<
-				keyof GeneralizedSecretData,
-				'SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PRIVATE_KEY_ID'
-			>,
-			string
+		config: Pick<
+			GeneralizedSecretData,
+			'SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PRIVATE_KEY_ID'
 		> & {
 			db: Firestore;
 			stripeInstance: stripe.Stripe;
