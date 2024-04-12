@@ -1,3 +1,7 @@
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 export type GeneralizedSecretData = {
 	SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL: string;
 	SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_AUTH_URI: string;
@@ -21,4 +25,43 @@ export type GeneralizedSecretData = {
 	SECRET_CRED_STRIPE_PRO_LICENSE_PRODUCT_MONTHLY_PRICE_ID_TEST_MODE: string;
 	SECRET_CRED_STRIPE_PRO_LICENSE_PRODUCT_YEARLY_PRICE_ID_LIVE_MODE: string;
 	SECRET_CRED_STRIPE_PRO_LICENSE_PRODUCT_YEARLY_PRICE_ID_TEST_MODE: string;
+};
+
+const fileName = fileURLToPath(import.meta.url);
+const directoryName = dirname(fileName);
+
+export const getSecretData = <
+	T extends GeneralizedSecretData = GeneralizedSecretData,
+>(
+	envPath: string,
+): T | null => {
+	try {
+		const file = readFileSync(envPath, 'utf-8');
+		const lines = file
+			.split('SECRET_CRED')
+			.map((line, index) => (index === 0 ? line : 'SECRET_CRED' + line))
+			.filter((line) => line.includes('='));
+		const secrets: Record<string, string | undefined> = {};
+		lines.forEach((line) => {
+			const [key, ...valueParts] = line.split('=');
+			let value = valueParts.join('=').trim().replace(/\\n/g, '\n');
+
+			// Check and remove quotes only if they are at both the start and end of the value
+			if (value.startsWith('"') && value.endsWith('"')) {
+				value = value.substring(1, value.length - 1);
+			}
+
+			const trimmed = key?.trim();
+
+			if (!trimmed) {
+				return;
+			}
+
+			secrets[trimmed] = value;
+		});
+		return secrets as T;
+	} catch (err) {
+		console.error(`Error reading ${directoryName}/../.env`, { err });
+		return null;
+	}
 };

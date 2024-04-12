@@ -1,1 +1,1 @@
-export * from 'ergonomic-node/lib/utils/environment/secretData.js';
+export * from 'ergonomic-node/lib/utils/environment/getSecretData.js';
