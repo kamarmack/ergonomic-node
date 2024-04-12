@@ -1,1 +1,1 @@
-export * from 'ergonomic-node/utils/index.js';
+export * from 'ergonomic-node/lib/index.js';
