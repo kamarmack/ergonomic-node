@@ -34,7 +34,7 @@ export const addHealthRoutesToExpressApp = (
 				res: express.Response,
 				next: express.NextFunction,
 			) => void;
-			gmailServiceAccountPath: string;
+			gmailApiServiceAccountPath: string;
 			mockApiObject: GeneralizedApiObject;
 		},
 ): void => {
@@ -48,7 +48,7 @@ export const addHealthRoutesToExpressApp = (
 		SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID,
 		apiObjectSpec,
 		corsPolicy,
-		gmailServiceAccountPath,
+		gmailApiServiceAccountPath,
 		mockApiObject,
 	} = params;
 
@@ -103,7 +103,7 @@ export const addHealthRoutesToExpressApp = (
 	const googleAuthJwtInstanceForGmailApi: JWT =
 		getGoogleAuthJwtInstanceForGmailApi({
 			...params,
-			serviceAccountPath: gmailServiceAccountPath,
+			serviceAccountPath: gmailApiServiceAccountPath,
 		});
 	app.options('*/v0/health/notifications', corsPolicy);
 	app.post(
