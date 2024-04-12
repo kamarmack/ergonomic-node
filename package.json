@@ -69,7 +69,7 @@
 		"format": "doctoc . && prettier --write .",
 		"lint": "eslint . --ext .ts",
 		"prepare": "husky install && chmod +x .husky/*",
-		"test": "NODE_OPTIONS=--experimental-vm-modules npx jest --config='./jest.config.json' --verbose",
+		"test": "NODE_OPTIONS=\"--experimental-vm-modules\" npx jest --config='./jest.config.json' --verbose",
 		"watch": "tsc --build --watch ./tsconfig.json"
 	},
 	"type": "module",
