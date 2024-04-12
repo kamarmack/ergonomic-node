@@ -1,0 +1,37 @@
+{
+	"compilerOptions": {
+		// Start -- Base TypeScript Configurations for a strict environment
+		"alwaysStrict": true,
+		"declaration": true,
+		"esModuleInterop": true,
+		"noEmitOnError": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"resolveJsonModule": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+		// End -- Base TypeScript Configurations for a strict environment
+
+		// Start -- Base TypeScript Configurations for a ES6 environment
+		"module": "esnext",
+		"moduleResolution": "node",
+		"target": "es6",
+		// End -- Base TypeScript Configurations for a ES6 environment
+
+		// Start -- Base TypeScript Configurations for an ES6 Project
+		"baseUrl": ".",
+		"outDir": ".",
+		"paths": {
+			"ergonomic-node/*": ["./*"]
+		},
+		"rootDir": "."
+		// End -- Base TypeScript Configurations for an ES6 Project
+	},
+	"exclude": ["**/*.js"]
+}
