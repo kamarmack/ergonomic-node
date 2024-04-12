@@ -1,0 +1,29 @@
+{
+	"cSpell.words": [
+		"autochangelog",
+		"doctoc",
+		"firestore",
+		"gtag",
+		"libphonenumber",
+		"luxon",
+		"nextjs",
+		"Parens",
+		"polyfillio",
+		"preconnect",
+		"rrule",
+		"tailwindcss",
+		"tanstack"
+	],
+	"clock.format": "isoUtcDateTime",
+	"jest.runMode": "on-demand",
+	"jest.outputConfig": {
+		"revealOn": "demand"
+	},
+	"terminal.integrated.confirmOnExit": "always",
+	"testing.openTesting": "neverOpen",
+	"workbench.colorCustomizations": {
+		"editorIndentGuide.background1": "#8CA58B8F",
+		"editorIndentGuide.activeBackground1": "#39FF148F",
+		"tree.indentGuidesStroke": "#39FF148F"
+	}
+}
