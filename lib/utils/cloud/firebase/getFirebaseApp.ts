@@ -12,7 +12,9 @@ export const getFirebaseApp = (
 	credentials: ServiceAccount | GeneralizedSecretData,
 ): FirebaseApp => {
 	const SERVICE_ACCOUNT =
-		'clientEmail' in credentials
+		'clientEmail' in credentials &&
+		'privateKey' in credentials &&
+		'projectId' in credentials
 			? credentials
 			: getFirebaseAdminServiceAccount(credentials as GeneralizedSecretData);
 
