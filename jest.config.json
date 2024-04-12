@@ -1,7 +1,7 @@
 {
 	"errorOnDeprecated": true,
-  "passWithNoTests": true,
-  "preset": "ts-jest",
+	"passWithNoTests": true,
+	"preset": "ts-jest",
 	"roots": ["."],
 	"testEnvironment": "node",
 	"verbose": true,
