@@ -1,0 +1,8 @@
+{
+	"errorOnDeprecated": true,
+  "preset": "ts-jest",
+	"roots": ["."],
+	"testEnvironment": "node",
+	"verbose": true,
+	"testPathIgnorePatterns": [".d.ts", ".ts"]
+}
