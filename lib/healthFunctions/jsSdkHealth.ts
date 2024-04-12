@@ -12,7 +12,7 @@ export const jsSdkHealthFunction =
 		res: express.Response<unknown, GeneralizedResponse>,
 		next: express.NextFunction,
 		config: {
-			apiObjectSpec: ApiObjectSpec;
+			apiObjectSpec: Pick<ApiObjectSpec, 'apiObjectCollectionId'>;
 			mockApiObject: GeneralizedApiObject;
 		},
 	) =>
