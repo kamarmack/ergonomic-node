@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-unresolved
 import { App as FirebaseApp, ServiceAccount } from 'firebase-admin/app';
 // eslint-disable-next-line import/no-unresolved
-import { type Storage, getStorage } from 'firebase-admin/storage';
+import { getStorage } from 'firebase-admin/storage';
 import { GeneralizedSecretData } from 'ergonomic-node/lib/utils/environment/index.js';
 import { getFirebaseApp } from 'ergonomic-node/lib/utils/cloud/firebase/getFirebaseApp.js';
+import { Bucket } from '@google-cloud/storage';
 
 export const getCloudStorageBucket = (
 	credentialsOrFirebaseApp:
@@ -11,7 +12,7 @@ export const getCloudStorageBucket = (
 		| GeneralizedSecretData
 		| FirebaseApp,
 	storageBucket: string = '',
-): Storage => {
+): Bucket => {
 	const firebaseApp =
 		'clientEmail' in credentialsOrFirebaseApp &&
 		'privateKey' in credentialsOrFirebaseApp &&
@@ -26,5 +27,10 @@ export const getCloudStorageBucket = (
 			? getFirebaseApp(credentialsOrFirebaseApp, storageBucket)
 			: (credentialsOrFirebaseApp as FirebaseApp);
 
-	return getStorage(firebaseApp);
+	return getStorage().bucket(
+		storageBucket ||
+			(firebaseApp.options.projectId
+				? `${firebaseApp.options.projectId}.appspot.com`
+				: undefined),
+	) as unknown as Bucket;
 };
