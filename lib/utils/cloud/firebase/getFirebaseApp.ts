@@ -10,6 +10,7 @@ import { getFirebaseAdminServiceAccount } from 'ergonomic-node/lib//utils/cloud/
 
 export const getFirebaseApp = (
 	credentials: ServiceAccount | GeneralizedSecretData,
+	storageBucket: string = '',
 ): FirebaseApp => {
 	const SERVICE_ACCOUNT =
 		'clientEmail' in credentials &&
@@ -21,5 +22,10 @@ export const getFirebaseApp = (
 	return initializeApp({
 		credential: cert(SERVICE_ACCOUNT),
 		projectId: SERVICE_ACCOUNT.projectId,
+		storageBucket:
+			storageBucket ||
+			(SERVICE_ACCOUNT.projectId
+				? `${SERVICE_ACCOUNT.projectId}.appspot.com`
+				: undefined),
 	});
 };
