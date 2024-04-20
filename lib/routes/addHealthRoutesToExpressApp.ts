@@ -25,8 +25,8 @@ import {
 export const addHealthRoutesToExpressApp = (
 	app: express.Express,
 	params: GeneralizedSecretData & {
-		SECRET_CRED_STRIPE_API_KEY_LIVE_MODE: string | null;
-		SECRET_CRED_STRIPE_API_KEY_TEST_MODE: string | null;
+		SECRET_CRED_STRIPE_API_KEY_LIVE_MODE?: string | null;
+		SECRET_CRED_STRIPE_API_KEY_TEST_MODE?: string | null;
 	} & GeneralizedServerVariables & {
 			apiObjectSpec: Pick<ApiObjectSpec, 'apiObjectCollectionId'>;
 			corsPolicy: (
