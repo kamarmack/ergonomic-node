@@ -15,6 +15,9 @@
 		"tanstack"
 	],
 	"clock.format": "isoUtcDateTime",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"files.eol": "\n",
 	"jest.runMode": "on-demand",
 	"jest.outputConfig": {
 		"revealOn": "demand"
