@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 import * as functionsV2 from 'firebase-functions/v2';
+// eslint-disable-next-line import/no-unresolved
+import { type setGlobalOptions } from 'firebase-functions/v2/options';
 import { https, logger } from 'firebase-functions';
-import { type setGlobalOptions } from 'firebase-functions/lib/v2/options';
 
 const functions = functionsV2 as unknown as {
 	https: typeof https;
