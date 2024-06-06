@@ -13,14 +13,15 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"resolveJsonModule": true,
+		"skipLibCheck": true,
 		"strict": true,
 		"strictNullChecks": true,
 		"strictPropertyInitialization": true,
 		// End -- Base TypeScript Configurations for a strict environment
 
 		// Start -- Base TypeScript Configurations for a ES6 environment
-		"module": "ESNext",
-		"moduleResolution": "Node",
+		"module": "esnext",
+		"moduleResolution": "node",
 		"target": "es6",
 		// End -- Base TypeScript Configurations for a ES6 environment
 
