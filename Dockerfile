@@ -1,5 +1,5 @@
-# Use official Node LTS (Node 18)
-FROM node:18
+# Use official Node LTS (Node 20)
+FROM node:20
 
 # Create app directory
 WORKDIR /usr/src/app
