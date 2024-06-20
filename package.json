@@ -3,7 +3,7 @@
 	"bugs": "https://github.com/kamarmack/ergonomic-node/issues",
 	"dependencies": {
 		"@google-cloud/storage": "^7.4.0",
-		"ergonomic": "^0.2.12",
+		"ergonomic": "^0.2.13",
 		"change-case": "^4.1.2",
 		"google-libphonenumber": "^3.2.31",
 		"ky-universal": "^0.12.0",
@@ -76,7 +76,7 @@
 		"clean": "tsc --build --clean ./tsconfig.json",
 		"format": "doctoc . && prettier --write .",
 		"lint": "eslint . --ext .ts",
-		"prepare": "husky install && chmod +x .husky/*",
+		"prepare": "(husky install && chmod +x .husky/*) || true",
 		"test": "NODE_OPTIONS=\"--experimental-vm-modules\" npx jest --config='./jest.config.json' --verbose",
 		"watch": "tsc --build --watch ./tsconfig.json"
 	},
