@@ -48,6 +48,17 @@ const getExpressInvocationLog = ({
 			);
 	}
 
+	const obfuscateRequestBodyPropertiesHeader = req.get(
+		'X-Obfuscate-Request-Body-Properties',
+	);
+	if (obfuscateRequestBodyPropertiesHeader) {
+		const properties = obfuscateRequestBodyPropertiesHeader.split(',');
+		const obfuscatedBody = R.mapObjIndexed((value, key) =>
+			properties.includes(key) ? '**********' : value,
+		)((req.body as Record<string, unknown>) ?? {});
+		log.request.body = obfuscatedBody;
+	}
+
 	return log;
 };
 
