@@ -12,7 +12,6 @@ let firebaseAppInstance: FirebaseApp | null = null;
 
 export const getFirebaseApp = (
 	credentials: ServiceAccount | GeneralizedSecretData,
-	storageBucket: string = '',
 ): FirebaseApp => {
 	if (!firebaseAppInstance) {
 		const SERVICE_ACCOUNT =
@@ -25,11 +24,6 @@ export const getFirebaseApp = (
 		firebaseAppInstance = initializeApp({
 			credential: cert(SERVICE_ACCOUNT),
 			projectId: SERVICE_ACCOUNT.projectId,
-			storageBucket:
-				storageBucket ||
-				(SERVICE_ACCOUNT.projectId
-					? `${SERVICE_ACCOUNT.projectId}.appspot.com`
-					: undefined),
 		});
 	}
 
