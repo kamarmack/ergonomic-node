@@ -1,8 +1,8 @@
 name: Publish to npm on merge
 'on':
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
