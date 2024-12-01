@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 export type GeneralizedSecretData = {
+	SECRET_CRED_DEPLOYMENT_ENVIRONMENT: 'live' | 'test';
 	SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL: string;
 	SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_AUTH_URI: string;
 	SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_CLIENT_EMAIL: string;
