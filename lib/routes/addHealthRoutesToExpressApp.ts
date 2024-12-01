@@ -25,8 +25,7 @@ import {
 export const addHealthRoutesToExpressApp = (
 	app: express.Express,
 	params: GeneralizedSecretData & {
-		SECRET_CRED_STRIPE_API_KEY_LIVE_MODE?: string | null;
-		SECRET_CRED_STRIPE_API_KEY_TEST_MODE?: string | null;
+		SECRET_CRED_STRIPE_API_KEY?: string | null;
 	} & GeneralizedServerVariables & {
 			apiObjectSpec: Pick<ApiObjectSpec, 'apiObjectCollectionId'>;
 			corsPolicy: (
@@ -41,8 +40,7 @@ export const addHealthRoutesToExpressApp = (
 	const {
 		SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PRIVATE_KEY_ID,
 		SECRET_CRED_FIREBASE_ADMIN_SERVICE_ACCOUNT_PROJECT_ID,
-		SECRET_CRED_STRIPE_API_KEY_LIVE_MODE,
-		SECRET_CRED_STRIPE_API_KEY_TEST_MODE,
+		SECRET_CRED_STRIPE_API_KEY,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_EMAIL,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_NAME,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID,
@@ -128,13 +126,9 @@ export const addHealthRoutesToExpressApp = (
 		},
 	);
 
-	if (
-		SECRET_CRED_STRIPE_API_KEY_LIVE_MODE &&
-		SECRET_CRED_STRIPE_API_KEY_TEST_MODE
-	) {
+	if (SECRET_CRED_STRIPE_API_KEY) {
 		const stripeInstance = getStripeInstance({
-			SECRET_CRED_STRIPE_API_KEY_LIVE_MODE,
-			SECRET_CRED_STRIPE_API_KEY_TEST_MODE,
+			SECRET_CRED_STRIPE_API_KEY,
 		});
 		app.options('*/v0/health/stripe-api', corsPolicy);
 		app.post(
