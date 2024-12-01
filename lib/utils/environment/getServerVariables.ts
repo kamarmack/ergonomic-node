@@ -5,4 +5,5 @@ export type GeneralizedServerVariables = {
 	SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID: string;
 	SERVER_VAR_ORIGIN_HTTP: string;
 	SERVER_VAR_ORIGIN_HTTPS: string;
+	SERVER_VAR_SITE_ORIGIN_BY_TARGET: Record<string, string>;
 };
