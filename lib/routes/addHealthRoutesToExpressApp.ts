@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { JWT } from 'googleapis-common';
 import {
-	GeneralizedApiObject,
-	ApiObjectSpec,
+	GeneralizedApiResource,
+	GeneralizedApiResourceSpec,
 	GeneralizedResponse,
 } from 'ergonomic';
 import {
@@ -27,14 +27,17 @@ export const addHealthRoutesToExpressApp = (
 	params: GeneralizedSecretData & {
 		SECRET_CRED_STRIPE_API_KEY?: string | null;
 	} & GeneralizedServerVariables & {
-			apiObjectSpec: Pick<ApiObjectSpec, 'apiObjectCollectionId'>;
+			apiObjectSpec: Pick<
+				GeneralizedApiResourceSpec,
+				'apiResourceCollectionId'
+			>;
 			corsPolicy: (
 				req: express.Request,
 				res: express.Response,
 				next: express.NextFunction,
 			) => void;
 			gmailApiServiceAccountPath: string;
-			mockApiObject: GeneralizedApiObject;
+			mockApiObject: GeneralizedApiResource;
 		},
 ): void => {
 	const {

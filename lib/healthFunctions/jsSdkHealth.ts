@@ -1,7 +1,7 @@
 import * as express from 'express';
 import {
-	GeneralizedApiObject,
-	ApiObjectSpec,
+	GeneralizedApiResource,
+	GeneralizedApiResourceSpec,
 	GeneralizedResponse,
 	getGeneralizedError,
 } from 'ergonomic';
@@ -12,8 +12,11 @@ export const jsSdkHealthFunction =
 		res: express.Response<unknown, GeneralizedResponse>,
 		next: express.NextFunction,
 		config: {
-			apiObjectSpec: Pick<ApiObjectSpec, 'apiObjectCollectionId'>;
-			mockApiObject: GeneralizedApiObject;
+			apiObjectSpec: Pick<
+				GeneralizedApiResourceSpec,
+				'apiResourceCollectionId'
+			>;
+			mockApiObject: GeneralizedApiResource;
 		},
 	) =>
 	() => {
@@ -26,9 +29,9 @@ export const jsSdkHealthFunction =
 
 				const sdkData: {
 					collectionId: string;
-					mockApiObject: GeneralizedApiObject;
+					mockApiObject: GeneralizedApiResource;
 				} = {
-					collectionId: apiObjectSpec.apiObjectCollectionId,
+					collectionId: apiObjectSpec.apiResourceCollectionId,
 					mockApiObject,
 				};
 
