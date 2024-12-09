@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { JWT } from 'googleapis-common';
 import {
-	GeneralizedApiObject,
-	ApiObjectSpec,
+	GeneralizedApiResource,
+	GeneralizedApiResourceSpec,
 	GeneralizedResponse,
 } from 'ergonomic';
 import {
@@ -27,14 +27,17 @@ export const addHealthRoutesToExpressApp = (
 	params: GeneralizedSecretData & {
 		SECRET_CRED_STRIPE_API_KEY?: string | null;
 	} & GeneralizedServerVariables & {
-			apiObjectSpec: Pick<ApiObjectSpec, 'apiObjectCollectionId'>;
+			apiResourceSpec: Pick<
+				GeneralizedApiResourceSpec,
+				'apiResourceCollectionId'
+			>;
 			corsPolicy: (
 				req: express.Request,
 				res: express.Response,
 				next: express.NextFunction,
 			) => void;
 			gmailApiServiceAccountPath: string;
-			mockApiObject: GeneralizedApiObject;
+			mockApiResource: GeneralizedApiResource;
 		},
 ): void => {
 	const {
@@ -44,10 +47,10 @@ export const addHealthRoutesToExpressApp = (
 		SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_EMAIL,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_NAME,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID,
-		apiObjectSpec,
+		apiResourceSpec,
 		corsPolicy,
 		gmailApiServiceAccountPath,
-		mockApiObject,
+		mockApiResource,
 	} = params;
 
 	app.options('*/v0/health/ok', corsPolicy);
@@ -74,8 +77,8 @@ export const addHealthRoutesToExpressApp = (
 				req,
 				res,
 				jsSdkHealthFunction(req, res, next, {
-					apiObjectSpec,
-					mockApiObject,
+					apiResourceSpec,
+					mockApiResource,
 				}),
 			);
 		},
