@@ -27,7 +27,7 @@ export const addHealthRoutesToExpressApp = (
 	params: GeneralizedSecretData & {
 		SECRET_CRED_STRIPE_API_KEY?: string | null;
 	} & GeneralizedServerVariables & {
-			apiObjectSpec: Pick<
+			apiResourceSpec: Pick<
 				GeneralizedApiResourceSpec,
 				'apiResourceCollectionId'
 			>;
@@ -37,7 +37,7 @@ export const addHealthRoutesToExpressApp = (
 				next: express.NextFunction,
 			) => void;
 			gmailApiServiceAccountPath: string;
-			mockApiObject: GeneralizedApiResource;
+			mockApiResource: GeneralizedApiResource;
 		},
 ): void => {
 	const {
@@ -47,10 +47,10 @@ export const addHealthRoutesToExpressApp = (
 		SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_EMAIL,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_SEND_FROM_NAME,
 		SERVER_VAR_GMAIL_NOTIFICATIONS_USER_ID,
-		apiObjectSpec,
+		apiResourceSpec,
 		corsPolicy,
 		gmailApiServiceAccountPath,
-		mockApiObject,
+		mockApiResource,
 	} = params;
 
 	app.options('*/v0/health/ok', corsPolicy);
@@ -77,8 +77,8 @@ export const addHealthRoutesToExpressApp = (
 				req,
 				res,
 				jsSdkHealthFunction(req, res, next, {
-					apiObjectSpec,
-					mockApiObject,
+					apiResourceSpec,
+					mockApiResource,
 				}),
 			);
 		},
