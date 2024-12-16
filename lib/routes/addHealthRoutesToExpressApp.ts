@@ -1,10 +1,6 @@
 import * as express from 'express';
 import { JWT } from 'googleapis-common';
-import {
-	GeneralizedApiResource,
-	GeneralizedApiResourceSpec,
-	GeneralizedResponse,
-} from 'ergonomic';
+import { GeneralizedApiResource, GeneralizedApiResourceSpec } from 'ergonomic';
 import {
 	ergonomicHealthFunction,
 	firebaseHealthFunction,
@@ -21,6 +17,7 @@ import {
 	getGoogleAuthJwtInstanceForGmailApi,
 	getStripeInstance,
 } from 'ergonomic-node/lib/utils/index.js';
+import { GeneralizedResLocals } from 'ergonomic-node/lib/types/GeneralizedResLocals.js';
 
 export const addHealthRoutesToExpressApp = (
 	app: express.Express,
@@ -56,7 +53,7 @@ export const addHealthRoutesToExpressApp = (
 	app.options('*/v0/health/ok', corsPolicy);
 	app.post(
 		'*/v0/health/ok',
-		(req, res: express.Response<unknown, GeneralizedResponse>, next) => {
+		(req, res: express.Response<unknown, GeneralizedResLocals>, next) => {
 			corsPolicy(req, res, healthFunction(req, res, next));
 		},
 	);
@@ -64,7 +61,7 @@ export const addHealthRoutesToExpressApp = (
 	app.options('*/v0/health/ergonomic', corsPolicy);
 	app.post(
 		'*/v0/health/ergonomic',
-		(req, res: express.Response<unknown, GeneralizedResponse>, next) => {
+		(req, res: express.Response<unknown, GeneralizedResLocals>, next) => {
 			corsPolicy(req, res, ergonomicHealthFunction(req, res, next));
 		},
 	);
@@ -72,7 +69,7 @@ export const addHealthRoutesToExpressApp = (
 	app.options('*/v0/health/js-sdk', corsPolicy);
 	app.post(
 		'*/v0/health/js-sdk',
-		(req, res: express.Response<unknown, GeneralizedResponse>, next) => {
+		(req, res: express.Response<unknown, GeneralizedResLocals>, next) => {
 			corsPolicy(
 				req,
 				res,
@@ -89,7 +86,7 @@ export const addHealthRoutesToExpressApp = (
 	app.options('*/v0/health/firebase', corsPolicy);
 	app.post(
 		'*/v0/health/firebase',
-		(req, res: express.Response<unknown, GeneralizedResponse>, next) => {
+		(req, res: express.Response<unknown, GeneralizedResLocals>, next) => {
 			corsPolicy(
 				req,
 				res,
@@ -111,7 +108,10 @@ export const addHealthRoutesToExpressApp = (
 		'*/v0/health/notifications',
 		(
 			req,
-			res: express.Response<unknown, SendEmailNotificationResponse>,
+			res: express.Response<
+				unknown,
+				GeneralizedResLocals<SendEmailNotificationResponse>
+			>,
 			next,
 		) => {
 			corsPolicy(
@@ -136,7 +136,7 @@ export const addHealthRoutesToExpressApp = (
 		app.options('*/v0/health/stripe-api', corsPolicy);
 		app.post(
 			'*/v0/health/stripe-api',
-			(req, res: express.Response<unknown, GeneralizedResponse>, next) => {
+			(req, res: express.Response<unknown, GeneralizedResLocals>, next) => {
 				corsPolicy(
 					req,
 					res,

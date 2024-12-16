@@ -12,11 +12,15 @@ import {
 	GeneralizedServerVariables,
 	getAuthHeaderBearerToken,
 } from 'ergonomic-node/lib/utils/index.js';
+import { GeneralizedResLocals } from 'ergonomic-node/lib/types/index.js';
 
 export const notificationsHealthFunction =
 	(
 		req: express.Request<unknown, unknown, SendEmailNotificationParams>,
-		res: express.Response<unknown, SendEmailNotificationResponse>,
+		res: express.Response<
+			unknown,
+			GeneralizedResLocals<SendEmailNotificationResponse>
+		>,
 		next: express.NextFunction,
 		config: Pick<
 			GeneralizedSecretData,
@@ -96,9 +100,9 @@ export const notificationsHealthFunction =
 					data: { id: emailNotificationId, threadId },
 				} = result;
 
-				// Save the stripeCustomer to the `_smoke_test_results_email_notifications` collection
+				// Save the stripeCustomer to the `_test` collection
 				const testDocRef = db
-					.collection('_smoke_test_results_email_notifications')
+					.collection('_test')
 					.doc(emailNotificationId ?? v4());
 				await testDocRef.set({
 					emailNotificationId,
@@ -109,19 +113,15 @@ export const notificationsHealthFunction =
 					timestamp: new Date().toISOString(),
 				});
 
-				res.locals.data = [
-					{
-						success: true,
-						threadId,
-						emailNotificationId,
-					},
-				];
+				res.locals.json = {
+					success: true,
+					threadId,
+					emailNotificationId,
+				};
 				return next();
 			} catch (err) {
 				const message = (err as Error)?.message || 'Unknown error';
-				res.locals.errors = res.locals.errors?.length
-					? res.locals.errors
-					: [getGeneralizedError({ message })];
+				res.locals.json = getGeneralizedError({ message });
 				return next();
 			}
 		})();

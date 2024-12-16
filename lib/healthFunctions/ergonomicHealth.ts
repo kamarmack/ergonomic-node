@@ -1,10 +1,11 @@
 import * as express from 'express';
-import { GeneralizedResponse, getEnum, getGeneralizedError } from 'ergonomic';
+import { getEnum, getGeneralizedError } from 'ergonomic';
+import { GeneralizedResLocals } from 'ergonomic-node/lib/types/GeneralizedResLocals.js';
 
 export const ergonomicHealthFunction =
 	(
 		req: express.Request,
-		res: express.Response<unknown, GeneralizedResponse>,
+		res: express.Response<unknown, GeneralizedResLocals>,
 		next: express.NextFunction,
 	) =>
 	() => {
@@ -20,13 +21,11 @@ export const ergonomicHealthFunction =
 				const fruitData: { fruit: Record<Fruit, Fruit> } = {
 					fruit: fruitEnum.obj,
 				};
-				res.locals.data = [fruitData];
+				res.locals.json = fruitData;
 				return next();
 			} catch (err) {
 				const message = (err as Error)?.message || 'Unknown error';
-				res.locals.errors = res.locals.errors?.length
-					? res.locals.errors
-					: [getGeneralizedError({ message })];
+				res.locals.json = getGeneralizedError({ message });
 				return next();
 			}
 		})();

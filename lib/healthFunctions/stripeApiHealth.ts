@@ -2,16 +2,17 @@
 import { type Firestore } from 'firebase-admin/firestore';
 import * as express from 'express';
 import * as stripe from 'stripe';
-import { GeneralizedResponse, getGeneralizedError } from 'ergonomic';
+import { getGeneralizedError } from 'ergonomic';
 import {
 	GeneralizedSecretData,
 	getAuthHeaderBearerToken,
 } from 'ergonomic-node/lib/utils/index.js';
+import { GeneralizedResLocals } from 'ergonomic-node/lib/types/GeneralizedResLocals.js';
 
 export const stripeApiHealthFunction =
 	(
 		req: express.Request<unknown, unknown, stripe.Stripe.CustomerCreateParams>,
-		res: express.Response<unknown, GeneralizedResponse>,
+		res: express.Response<unknown, GeneralizedResLocals>,
 		next: express.NextFunction,
 		config: Pick<
 			GeneralizedSecretData,
@@ -46,19 +47,15 @@ export const stripeApiHealthFunction =
 					stripeParams,
 				);
 
-				// Save the stripeCustomer to the `_smoke_test_results_stripe` collection
-				const testDocRef = db
-					.collection('_smoke_test_results_stripe')
-					.doc(stripeCustomer.id);
+				// Save the stripeCustomer to the `_test` collection
+				const testDocRef = db.collection('_test').doc(stripeCustomer.id);
 				await testDocRef.set(stripeCustomer);
 
-				res.locals.data = [{ customer: stripeCustomer }];
+				res.locals.json = stripeCustomer;
 				return next();
 			} catch (err) {
 				const message = (err as Error)?.message || 'Unknown error';
-				res.locals.errors = res.locals.errors?.length
-					? res.locals.errors
-					: [getGeneralizedError({ message })];
+				res.locals.json = getGeneralizedError({ message });
 				return next();
 			}
 		})();
