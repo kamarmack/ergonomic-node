@@ -1,7 +1,12 @@
 import * as express from 'express';
 
-export const getAuthHeaderBearerToken = (
-	req: express.Request<unknown, unknown, unknown, unknown>,
+export const getAuthHeaderBearerToken = <
+	TRequestBody,
+	TResponseBody,
+	TParams,
+	TQuery,
+>(
+	req: express.Request<TRequestBody, TResponseBody, TParams, TQuery>,
 ) => {
 	const authHeader = req.get('Authorization');
 	if (!authHeader) throw new Error('No Authorization header');
