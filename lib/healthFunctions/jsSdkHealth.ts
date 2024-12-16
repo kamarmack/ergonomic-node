@@ -2,14 +2,14 @@ import * as express from 'express';
 import {
 	GeneralizedApiResource,
 	GeneralizedApiResourceSpec,
-	GeneralizedResponse,
 	getGeneralizedError,
 } from 'ergonomic';
+import { GeneralizedResLocals } from 'ergonomic-node/lib/types/GeneralizedResLocals.js';
 
 export const jsSdkHealthFunction =
 	(
 		_: express.Request,
-		res: express.Response<unknown, GeneralizedResponse>,
+		res: express.Response<unknown, GeneralizedResLocals>,
 		next: express.NextFunction,
 		config: {
 			apiResourceSpec: Pick<
@@ -35,13 +35,11 @@ export const jsSdkHealthFunction =
 					mockApiResource,
 				};
 
-				res.locals.data = [sdkData];
+				res.locals.json = sdkData;
 				return next();
 			} catch (err) {
 				const message = (err as Error)?.message || 'Unknown error';
-				res.locals.errors = res.locals.errors?.length
-					? res.locals.errors
-					: [getGeneralizedError({ message })];
+				res.locals.json = getGeneralizedError({ message });
 				return next();
 			}
 		})();

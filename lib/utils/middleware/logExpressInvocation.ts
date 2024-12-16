@@ -1,16 +1,18 @@
 import * as util from 'util';
 import * as R from 'ramda';
 import * as express from 'express';
-import { GeneralizedResponse } from 'ergonomic/index.js';
+import { getGeneralizedError } from 'ergonomic';
 import { firebaseFunctions } from 'ergonomic-node/lib/utils/deployment/index.js';
-import { getExpressInvocationStatusCode } from 'ergonomic-node/lib/utils/middleware/getExpressInvocationStatusCode.js';
 import { GeneralizedSecretData } from 'ergonomic-node/lib/utils/environment/index.js';
+import {
+	GeneralizedResLocals,
+	isResLocalsJsonError,
+} from 'ergonomic-node/lib/types/GeneralizedResLocals.js';
 
 const getExpressInvocationLog = ({
-	data,
-	errors,
+	json,
 	req,
-}: { req: express.Request } & GeneralizedResponse) => {
+}: { req: express.Request } & GeneralizedResLocals) => {
 	const log = {
 		request: R.pick(
 			[
@@ -32,11 +34,10 @@ const getExpressInvocationLog = ({
 			],
 			req,
 		),
-		response: {
-			data: data,
-			errors: errors,
-		},
-		status_code: getExpressInvocationStatusCode({ errors }),
+		response: json,
+		status_code: isResLocalsJsonError(json)
+			? Number(json.error.status_code)
+			: 200,
 	} as const;
 
 	if (log.request?.headers?.authorization) {
@@ -66,12 +67,19 @@ export const logExpressInvocation =
 	(config: Pick<GeneralizedSecretData, 'SECRET_CRED_SERVER_PROTOCOL'>) =>
 	(
 		req: express.Request,
-		res: express.Response<unknown, GeneralizedResponse>,
+		res: express.Response<unknown, GeneralizedResLocals>,
 		_: express.NextFunction,
 	) => {
 		const { SECRET_CRED_SERVER_PROTOCOL } = config;
 		const resLocals = res.locals;
-		const log = getExpressInvocationLog({ ...resLocals, req });
+		const log = getExpressInvocationLog({
+			json:
+				resLocals.json ??
+				getGeneralizedError({
+					type: 'request.unknown-error',
+				}),
+			req,
+		});
 
 		if (SECRET_CRED_SERVER_PROTOCOL === 'http') {
 			console.log(
