@@ -24,10 +24,7 @@ export const addHealthRoutesToExpressApp = (
 	params: GeneralizedSecretData & {
 		SECRET_CRED_STRIPE_API_KEY?: string | null;
 	} & GeneralizedServerVariables & {
-			apiResourceSpec: Pick<
-				GeneralizedApiResourceSpec,
-				'apiResourceCollectionId'
-			>;
+			apiResourceSpec: Pick<GeneralizedApiResourceSpec, 'collectionId'>;
 			corsPolicy: (
 				req: express.Request,
 				res: express.Response,

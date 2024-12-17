@@ -12,10 +12,7 @@ export const jsSdkHealthFunction =
 		res: express.Response<unknown, GeneralizedResLocals>,
 		next: express.NextFunction,
 		config: {
-			apiResourceSpec: Pick<
-				GeneralizedApiResourceSpec,
-				'apiResourceCollectionId'
-			>;
+			apiResourceSpec: Pick<GeneralizedApiResourceSpec, 'collectionId'>;
 			mockApiResource: GeneralizedApiResource;
 		},
 	) =>
@@ -31,7 +28,7 @@ export const jsSdkHealthFunction =
 					collectionId: string;
 					mockApiResource: GeneralizedApiResource;
 				} = {
-					collectionId: apiResourceSpec.apiResourceCollectionId,
+					collectionId: apiResourceSpec.collectionId,
 					mockApiResource,
 				};
 
