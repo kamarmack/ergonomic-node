@@ -18,7 +18,7 @@ export const sendExpressResponse =
 		if (isResLocalsJsonError(resLocalsJson)) {
 			res.status(Number(resLocalsJson.error.status_code)).json(resLocalsJson);
 		} else {
-			res.status(200).json(resLocals);
+			res.status(200).json(resLocalsJson);
 		}
 
 		return next();
