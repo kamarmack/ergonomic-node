@@ -21,6 +21,7 @@
 		"firebase-functions": "^4.4.1",
 		"google-auth-library": "^9.15.0",
 		"googleapis": "^134.0.0",
+		"web-streams-polyfill": "^4.0.0",
 		"stripe": "^14.10.0"
 	},
 	"description": "Helper types and functions for TypeScript repos using Node.js",
