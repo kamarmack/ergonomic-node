@@ -60,7 +60,10 @@ const getExpressInvocationLog = ({
 		log.request.body = obfuscatedBody;
 	}
 
-	return log;
+	return {
+		...log,
+		message: `${log.status_code}: ${log.request.method} ${log.request.originalUrl}`,
+	};
 };
 
 export const logExpressInvocation =
